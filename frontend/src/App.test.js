@@ -12,7 +12,7 @@ beforeEach(() => {
 test('renders the video call landing page', () => {
   render(<App />);
 
-  expect(screen.getByRole('heading', { name: 'Apna Video Call' })).toBeInTheDocument();
+  expect(screen.getByRole('heading', { name: 'Video Meetings' })).toBeInTheDocument();
   expect(screen.getByText('Join as Guest')).toBeInTheDocument();
 });
 

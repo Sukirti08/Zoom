@@ -1,5 +1,12 @@
-# Zoom
-A full stack video conferencing web application.
+# Video Meetings
+
+A Zoom-style portfolio app with guest rooms, shareable links, and browser video
+calls. The React frontend uses WebRTC for media and Socket.IO for signaling.
+The Express API uses MongoDB for accounts and meeting history.
+
+Portfolio repository maintained by [Sukirti08](https://github.com/Sukirti08).
+
+[Live demo](https://sukirti08-zoom-demo.onrender.com)
 
 ## TURN relay
 
