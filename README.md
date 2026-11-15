@@ -12,3 +12,14 @@ REACT_APP_TURN_CREDENTIAL=your-relay-credential
 ```
 
 These credentials are visible to browsers. For a public deployment, issue short-lived TURN credentials from a backend.
+
+## Deploy the demo
+
+Import this repository as a Render Blueprint. Set the service's `MONGODB_URI` to
+a MongoDB connection string for the `zoom` database and allow the service's
+outbound addresses in the database project's network access list. Render
+builds and serves the React app and API from the same HTTPS origin. The health
+endpoint is `/healthz`.
+
+Guest links start a new room. Share that room's URL with the other participant.
+Configure TURN if callers may be on networks that block direct WebRTC traffic.

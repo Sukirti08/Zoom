@@ -15,7 +15,7 @@ export const connectToSocket = (server) => {
         const joinedRooms = new Set();
 
         socket.on("join-call", (path) => {
-            if (typeof path !== "string" || !path.trim() || joinedRooms.has(path)) {
+            if (typeof path !== "string" || !path.trim() || path.length > 1024 || joinedRooms.size) {
                 return;
             }
 
@@ -38,16 +38,20 @@ export const connectToSocket = (server) => {
         });
 
         socket.on("signal", (toId, message) => {
-            io.to(toId).emit("signal", socket.id, message);
+            const [path] = joinedRooms;
+            if (rooms.get(path)?.members.has(toId) && typeof message === "string") {
+                io.to(toId).emit("signal", socket.id, message);
+            }
         });
 
         socket.on("chat-message", (data, sender) => {
             const [path] = joinedRooms;
             const room = rooms.get(path);
-            if (!room) {
+            if (!room || typeof data !== "string" || data.length > 2000 || typeof sender !== "string" || sender.length > 100) {
                 return;
             }
 
+            if (room.messages.length >= 100) room.messages.shift();
             room.messages.push({ data, sender, socketId: socket.id });
             for (const member of room.members) {
                 io.to(member).emit("chat-message", data, sender, socket.id);

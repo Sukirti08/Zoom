@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: sukirti08-zoom-demo
+    runtime: node
+    plan: free
+    buildCommand: npm ci --prefix backend && npm ci --prefix frontend && CI=false npm run build --prefix frontend
+    startCommand: npm start --prefix backend
+    healthCheckPath: /healthz
+    envVars:
+      - key: NODE_VERSION
+        value: 22.22.0
+      - key: NODE_ENV
+        value: production
+      - key: NPM_CONFIG_PRODUCTION
+        value: "false"
+      - key: MONGODB_URI
+        sync: false
